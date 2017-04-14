@@ -1,0 +1,8 @@
+*tfvars
+*tfstate*
+.terraform
+*.swp
+*.plan
+*-env/*
+*.key
+*.crt
