@@ -1,0 +1,28 @@
+#cloud-config
+write_files:
+  - path: /etc/rc.local
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      wait-for-docker
+      IP="$(wget -qO - http://169.254.169.254/2016-06-30/meta-data/${ip-addr})"
+      mkdir -p /var/lib/rancher/etc
+      echo "export CATTLE_AGENT_IP=$${IP}" >> /var/lib/rancher/etc/agent.conf
+      ${rancher_registration_command}
+rancher:
+  docker:
+    engine: docker-1.12.6
+    log_driver: "json-file"
+    log_opts:
+      max-file: "3"
+      max-size: "100m"
+      labels: "prodservices,production"
+  services_include:
+    kernel-headers: "true"
+  services:
+    giddyup-health:
+      image: cloudnautique/giddyup:v0.14.0
+      ports:
+        - 1620:1620
+      command: /giddyup health
