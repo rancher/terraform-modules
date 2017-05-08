@@ -9,6 +9,7 @@ resource "aws_launch_configuration" "config" {
   associate_public_ip_address = false
   ebs_optimized               = false
   user_data                   = "${var.userdata}"
+  iam_instance_profile        = "${var.iam_instance_profile}"
 
   root_block_device {
     volume_type = "${var.root_volume_type}"
