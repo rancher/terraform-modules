@@ -50,7 +50,7 @@ module "management_elb" {
   proxy_proto_port_string = "80,8080"
   instance_http_port      = "80"
 
-  health_check_target     = "HTTP:8080/ping"
+  health_check_target     = "HTTP:8080/v1/scripts/api.crt"
 
   ssl_certificate_arn     = "${data.terraform_remote_state.network.rancher_com_arn}"
 }
@@ -79,5 +79,3 @@ module "compute" {
   externally_defined_userdata = "${data.template_file.userdata.rendered}"
   health_check_type           = "${var.health_check_type}"
 }
-
-
