@@ -9,16 +9,18 @@ module "aws_sg_db" {
 module "aws_database" {
   source = "./db"
 
-  rds_instance_class    = "${var.rds_instance_class}"
-  rds_is_multi_az       = "${var.rds_is_multi_az}"
-  rds_engine_type       = "${var.rds_engine_type}"
-  rds_instance_name     = "${var.rds_instance_name}"
-  rds_allocated_storage = "${var.rds_allocated_storage}"
-  rds_engine_version    = "${var.rds_engine_version}"
-  database_name         = "${var.database_name}"
-  database_user         = "${var.database_user}"
-  database_password     = "${var.database_password}"
-  db_subnet_ids         = "${var.db_subnet_ids}"
+  rds_instance_class      = "${var.rds_instance_class}"
+  rds_is_multi_az         = "${var.rds_is_multi_az}"
+  rds_engine_type         = "${var.rds_engine_type}"
+  rds_instance_name       = "${var.rds_instance_name}"
+  rds_allocated_storage   = "${var.rds_allocated_storage}"
+  rds_engine_version      = "${var.rds_engine_version}"
+  database_name           = "${var.database_name}"
+  database_user           = "${var.database_user}"
+  database_password       = "${var.database_password}"
+  db_subnet_ids           = "${var.db_subnet_ids}"
+  skip_final_snapshot     = "${var.skip_final_snapshot}"
+  backup_retention_period = "${var.backup_retention_period}"
 
   // dynamic
   rds_security_group_id = "${module.aws_sg_db.security_group_id_database}"

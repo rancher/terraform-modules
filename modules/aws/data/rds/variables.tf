@@ -49,3 +49,11 @@ variable "database_password" {
 variable "security_group_name" {
   default = "sg_cattle_db"
 }
+
+variable "skip_final_snapshot" {
+  default = "false"
+}
+
+variable "backup_retention_period" {
+  default = 1
+}

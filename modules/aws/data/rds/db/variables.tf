@@ -58,3 +58,11 @@ variable "db_parameter_group" {
 variable "db_subnet_ids" {
   type = "list"
 }
+
+variable "skip_final_snapshot" {
+  default = "false"
+}
+
+variable "backup_retention_period" {
+  default = 1
+}
