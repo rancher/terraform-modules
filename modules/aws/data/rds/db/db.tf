@@ -22,6 +22,12 @@ resource "aws_db_instance" "main_rds_instance" {
   username          = "${var.database_user}"
   password          = "${var.database_password}"
 
+  //snapshots and backups
+  skip_final_snapshot       = "${var.skip_final_snapshot}"
+  copy_tags_to_snapshot     = "${var.skip_final_snapshot == "false" ? "true" : "false" }"
+  final_snapshot_identifier = "${format("%s-finalsnapshot", var.rds_instance_name)}"
+  backup_retention_period   = "${var.backup_retention_period}"
+
   // Because we're assuming a VPC, we use this option, but only one SG id
   vpc_security_group_ids = ["${var.rds_security_group_id}"]
 
