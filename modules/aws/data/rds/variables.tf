@@ -1,3 +1,7 @@
+variable "name" {
+  default = "default"
+}
+
 variable "vpc_id" {}
 
 variable "rds_instance_class" {}

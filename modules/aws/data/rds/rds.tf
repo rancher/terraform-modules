@@ -28,7 +28,7 @@ module "aws_database" {
 }
 
 resource "aws_db_parameter_group" "default" {
-  name        = "default-db-parameter-group"
+  name        = "${var.name}-db-parameter-group"
   family      = "mysql5.6"
   description = "RDS Mysql params"
 
