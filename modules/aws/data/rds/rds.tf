@@ -14,6 +14,7 @@ module "aws_database" {
   rds_engine_type         = "${var.rds_engine_type}"
   rds_instance_name       = "${var.rds_instance_name}"
   rds_allocated_storage   = "${var.rds_allocated_storage}"
+  rds_storage_type        = "${var.rds_storage_type}"
   rds_engine_version      = "${var.rds_engine_version}"
   database_name           = "${var.database_name}"
   database_user           = "${var.database_user}"
@@ -29,12 +30,17 @@ module "aws_database" {
 
 resource "aws_db_parameter_group" "default" {
   name        = "${var.name}-db-parameter-group"
-  family      = "mysql5.6"
-  description = "RDS Mysql params"
+  family      = "${var.rds_parameter_group_family}"
+  description = "RDS Cattle params"
 
   parameter {
     name  = "character_set_server"
     value = "utf8"
+  }
+
+  parameter {
+    name  = "collation_server"
+    value = "utf8_general_ci"
   }
 
   parameter {

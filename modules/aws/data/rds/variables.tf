@@ -61,3 +61,7 @@ variable "skip_final_snapshot" {
 variable "backup_retention_period" {
   default = 1
 }
+
+variable "rds_parameter_group_family" {
+  default = "mysql5.6"
+}
