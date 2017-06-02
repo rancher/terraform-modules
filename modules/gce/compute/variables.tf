@@ -8,14 +8,20 @@ variable "server_count" {
 variable "compute_count" {
   default = "1"
 }
-variable "server_metadata_startup_script" {
-  //default = "${file("metadata_scripts/server.sh")}"
-  default = ""
-}
-variable "compute_metadata_startup_script" {
-  //default = "${file("metadata_scripts/compute.sh")}"
-  default = ""
-}
+
 variable "service_account_scopes" {
   type = "list"
+}
+
+variable "instance_metadata" {
+  type = "map"
+  default = {}
+}
+variable "instance_zone" {
+  default = "us-central1-a"
+}
+
+variable "instance_tags"  {
+  type = "list"
+  default = []
 }
