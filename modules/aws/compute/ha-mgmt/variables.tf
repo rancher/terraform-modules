@@ -54,3 +54,7 @@ variable "userdata" {
   type    = "string"
   default = ""
 }
+
+variable "root_volume_size" {
+  default = 8
+}
