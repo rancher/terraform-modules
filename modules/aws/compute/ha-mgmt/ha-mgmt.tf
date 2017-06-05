@@ -18,6 +18,7 @@ module "asg" {
   health_check_type   = "${var.health_check_type}"
   health_check_target = "${var.health_check_target}"
   spot_enabled        = "${var.spot_enabled}"
+  root_volume_size    = "${var.root_volume_size}"
 }
 
 output "asg_name" {
