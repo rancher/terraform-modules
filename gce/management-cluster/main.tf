@@ -5,6 +5,16 @@ provider "google" {
   region      = "us-central1"
 }
 
+module "gce_database" {
+  source = "../../modules/gce/database"
+
+  name = "william-test-db"
+  region = "us-central"
+  database_tier = "db-n1-standard-1"
+  disk_size = 20
+  disk_type = "PD_SSD"
+}
+
 module "gce_compute" {
   source = "../../modules/gce/compute"
 
@@ -15,17 +25,10 @@ module "gce_compute" {
   server_count = "1"
   compute_count = "1"
   service_account_scopes = []
+  database_endpoint = "${module.gce_database.endpoint}"
 }
 
-module "gce_database" {
-  source = "../../modules/gce/database"
 
-  name = "william-test-db"
-  region = "us-central"
-  database_tier = "db-n1-standard-1"
-  disk_size = 20
-  disk_type = "PD_SSD"
-}
 
 
 # provider "rancher" {

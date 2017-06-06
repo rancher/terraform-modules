@@ -25,3 +25,4 @@ variable "instance_tags"  {
   type = "list"
   default = []
 }
+variable "database_endpoint" {}

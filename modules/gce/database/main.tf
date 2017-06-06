@@ -9,3 +9,7 @@ resource "google_sql_database_instance" "master" {
     disk_type = "${var.disk_type}"
   }
 }
+
+output "endpoint" {
+  value = "${google_sql_database_instance.master.ip_address.0.ip_address }"
+}
