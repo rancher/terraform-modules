@@ -5,9 +5,6 @@ variable "disk_image" {}
 variable "server_count" {
   default = "1"
 }
-variable "compute_count" {
-  default = "1"
-}
 
 variable "service_account_scopes" {
   type = "list"

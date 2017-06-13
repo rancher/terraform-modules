@@ -10,6 +10,13 @@ resource "google_sql_database_instance" "master" {
   }
 }
 
+resource "google_sql_user" "rancher" {
+  name     = "${var.db_user}"
+  instance = "${google_sql_database_instance.master.name}"
+  host     = "%"
+  password = "${var.db_pass}"
+}
+
 output "endpoint" {
   value = "${google_sql_database_instance.master.ip_address.0.ip_address }"
 }
