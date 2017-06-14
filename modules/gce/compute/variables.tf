@@ -1,7 +1,6 @@
 variable "name" {}
 variable "machine_type" {}
 variable "zone" {}
-variable "disk_image" {}
 variable "server_count" {
   default = "1"
 }
