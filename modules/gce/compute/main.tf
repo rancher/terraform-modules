@@ -48,11 +48,13 @@ resource "google_compute_target_pool" "rancher-servers" {
   # ]
 }
 
+
 resource "google_compute_instance_template" "rancher-servers" {
   name         = "${var.name}-server"
   description = "Template for Rancher Servers"
 
-  tags = "${var.instance_tags}"
+  tags = ["${var.instance_tags}", "rancher-servers"]
+
   machine_type = "${var.machine_type}"
   instance_description = "Instance running Rancher Server"
   can_ip_forward       = false
@@ -87,4 +89,17 @@ resource "google_compute_forwarding_rule" "rancher-servers" {
   name       = "test"
   target     = "${google_compute_target_pool.rancher-servers.self_link}"
   port_range = "80"
+}
+
+resource "google_compute_firewall" "default" {
+  name    = "tf-rancher-servers-firewall"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["rancher-servers"]
 }
