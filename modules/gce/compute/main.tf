@@ -49,6 +49,20 @@ resource "google_compute_target_pool" "rancher-servers" {
 }
 
 
+data "template_file" "userdata" {
+  template = "${file("${path.module}/files/userdata.template")}"
+
+  vars {
+    database_endpoint = "${var.database_endpoint}"
+    database_name     = "${var.database_name}"
+    database_user     = "${var.database_user}"
+    database_password = "${var.database_password}"
+    rancher_version   = ""
+    sysdig_key        = ""
+    api_ui_version    = ""
+  }
+}
+
 resource "google_compute_instance_template" "rancher-servers" {
   name         = "${var.name}-server"
   description = "Template for Rancher Servers"
@@ -72,12 +86,13 @@ resource "google_compute_instance_template" "rancher-servers" {
 
   network_interface {
     network = "default"
-
+    access_config {
+    }
   }
 
   metadata = "${var.instance_metadata}"
 
-  metadata_startup_script = "${file("${path.module}/metadata_scripts/server.sh")}"
+  metadata_startup_script = "${data.template_file.userdata.rendered}"
 
 
   service_account {

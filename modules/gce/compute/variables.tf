@@ -22,3 +22,9 @@ variable "instance_tags"  {
   default = []
 }
 variable "database_endpoint" {}
+
+variable "database_name" {}
+
+variable "database_user" {}
+
+variable "database_password" {}
