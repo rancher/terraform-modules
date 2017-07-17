@@ -21,10 +21,19 @@ variable "instance_tags"  {
   type = "list"
   default = []
 }
-variable "database_endpoint" {}
+variable "database_endpoint" {
+  default = ""
+}
 
-variable "database_name" {}
+variable "database_name" {
+  default = ""
+}
 
-variable "database_user" {}
+variable "database_user" {
+  default = ""
+}
 
-variable "database_password" {}
+variable "database_password" {
+  default = ""
+
+}
