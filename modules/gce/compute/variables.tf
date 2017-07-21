@@ -37,3 +37,6 @@ variable "database_password" {
   default = ""
 
 }
+variable "docker_version" {
+  default = "docker-1.12.6"
+}

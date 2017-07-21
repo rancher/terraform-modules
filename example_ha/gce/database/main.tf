@@ -17,6 +17,8 @@ module "gce_database" {
   database_tier = "db-n1-standard-1"
   disk_size = 20
   disk_type = "PD_SSD"
+  db_user = "${var.db_user}"
+  db_user = "${var.db_pass}"
 }
 
 output "endpoint" {

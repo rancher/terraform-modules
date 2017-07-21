@@ -8,7 +8,7 @@ write_files:
     content: |
       #!/bin/bash
       wait-for-docker
-      docker run -d -p 8080:8080 -p 9345:9345 --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e JAVA_OPTS="-Xmx8g" rancher/rancher:stable --advertise-address $(wget -qO - --header="Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/ip) --db-host ${database_endpoint} --db-pass ${database_password} --db-user ${database_user}
+      docker run -d -p 8080:8080 -p 9345:9345 --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e JAVA_OPTS="-Xmx8g" rancher/server:stable --advertise-address $(wget -qO - --header="Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/ip) --db-host ${database_endpoint} --db-pass ${database_password} --db-user ${database_user}
   - path: /var/lib/rancher/etc/ssl/README.txt
     content: "CA crt will be pulled into this directory"
   - path: /etc/nginx/conf.d/redirect.conf
@@ -22,7 +22,7 @@ write_files:
       }
 rancher:
   docker:
-    engine: docker-1.10.3
+    engine: ${docker_version}
     log_driver: "json-file"
     log_opts:
       max-file: "3"

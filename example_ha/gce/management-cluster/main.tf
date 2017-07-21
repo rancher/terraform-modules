@@ -5,15 +5,15 @@ provider "google" {
   region      = "us-central1"
 }
 
+resource "random_id" "server" {
+   byte_length = 4
+}
+
 // Expected to be set at runtime by user
 variable "database_endpoint" {}
 variable "database_user" {}
 variable "database_password" {}
 variable "database_name" {}
-
-resource "random_id" "server" {
-   byte_length = 4
-}
 
 module "gce_compute" {
   source = "../../../modules/gce/compute"
