@@ -3,7 +3,7 @@ resource "google_compute_image" "rancheros" {
   name = "rancheros"
   raw_disk {
     source = "https://storage.googleapis.com/releases.rancher.com/os/v1.0.3/rancheros-v1.0.3.tar.gz"
-    #sha1 = "24451c0624c2c2de108ad78ee93f8b5633526f19"
+    sha1 = "e151a5fab00a7ee83c9f9589a42a3fbb833043c1"
   }
 }
 
@@ -57,9 +57,7 @@ data "template_file" "userdata" {
     database_name     = "${var.database_name}"
     database_user     = "${var.database_user}"
     database_password = "${var.database_password}"
-    rancher_version   = ""
-    sysdig_key        = ""
-    api_ui_version    = ""
+    rancher_version   = "${var.rancher_version}"
     docker_version    = "${var.docker_version}"
   }
 }

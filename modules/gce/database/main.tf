@@ -1,3 +1,4 @@
+// GCE Cloud SQL is a MySQL compatible persistence service
 resource "google_sql_database_instance" "master" {
   name = "${var.name}"
   region = "${var.region}"
