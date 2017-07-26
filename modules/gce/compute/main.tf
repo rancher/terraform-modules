@@ -100,7 +100,7 @@ resource "google_compute_instance_template" "rancher-servers" {
 }
 
 resource "google_compute_forwarding_rule" "rancher-servers" {
-  name       = "test"
+  name       = "rancher-servers-forwarder"
   target     = "${google_compute_target_pool.rancher-servers.self_link}"
   port_range = "80"
 }
@@ -112,6 +112,11 @@ resource "google_compute_firewall" "default" {
   allow {
     protocol = "tcp"
     ports    = ["22"]
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
   }
 
   source_ranges = ["0.0.0.0/0"]
