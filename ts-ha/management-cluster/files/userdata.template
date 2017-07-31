@@ -1,37 +1,37 @@
-#cloud-config
-write_files:
-  - path: /etc/rc.local
-    permissions: "0755"
-    owner: root
-    content: |
-      #!/bin/bash
-      wait-for-docker
-      docker run -d -p 8080:8080 -p 9345:9345 --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e DEFAULT_CATTLE_API_UI_INDEX=https://releases.rancher.com/ui/${api_ui_version} -e JAVA_OPTS="-Xmx8g" ${rancher_version} --advertise-address $(wget -qO - http://169.254.169.254/2016-06-30/meta-data/${ip-addr}) --db-host ${database_endpoint} --db-pass ${database_password} --db-user ${database_user}
-  - path: /var/lib/rancher/etc/ssl/README.txt
-    content: "CA crt will be pulled into this directory"
-  - path: /etc/nginx/conf.d/redirect.conf
-    permissions: "0644"
-    content: |
-      server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-        server_name _;
-        return 301 https://$host$request_uri;
-      }
-rancher:
-  docker:
-    engine: docker-1.10.3
-    log_driver: "json-file"
-    log_opts:
-      max-file: "3"
-      max-size: "100m"
-      labels: "production"
-  services_include:
-    kernel-headers: true
-  services:
-    nginx-redirect:
-      image: nginx:1.10.2-alpine
-      net: host
-      volumes:
-        - /etc/nginx/conf.d:/etc/nginx/conf.d
-      
+# #cloud-config
+# write_files:
+#   - path: /etc/rc.local
+#     permissions: "0755"
+#     owner: root
+#     content: |
+#       #!/bin/bash
+#       wait-for-docker
+#       docker run -d -p 8080:8080 -p 9345:9345 --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e DEFAULT_CATTLE_API_UI_INDEX=https://releases.rancher.com/ui/${api_ui_version} -e JAVA_OPTS="-Xmx8g" ${rancher_version} --advertise-address $(wget -qO - http://169.254.169.254/2016-06-30/meta-data/${ip-addr}) --db-host ${database_endpoint} --db-pass ${database_password} --db-user ${database_user}
+#   - path: /var/lib/rancher/etc/ssl/README.txt
+#     content: "CA crt will be pulled into this directory"
+#   - path: /etc/nginx/conf.d/redirect.conf
+#     permissions: "0644"
+#     content: |
+#       server {
+#         listen 80 default_server;
+#         listen [::]:80 default_server;
+#         server_name _;
+#         return 301 https://$host$request_uri;
+#       }
+# rancher:
+#   docker:
+#     engine: docker-1.10.3
+#     log_driver: "json-file"
+#     log_opts:
+#       max-file: "3"
+#       max-size: "100m"
+#       labels: "production"
+#   services_include:
+#     kernel-headers: true
+#   services:
+#     nginx-redirect:
+#       image: nginx:1.10.2-alpine
+#       net: host
+#       volumes:
+#         - /etc/nginx/conf.d:/etc/nginx/conf.d
+#

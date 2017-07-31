@@ -39,21 +39,21 @@ variable "subnet_ids" {
 }
 
 variable "health_check_type" {
-  default = "ELB"
+  default = "EC2"
 }
 
 variable "health_check_target" {
-  default = "HTTP:8080/ping"
+  default = "TCP:8080"
 }
 
 variable "externally_defined_userdata" {
   default = ""
 }
 
-variable "userdata" {
+/*variable "userdata" {
   type    = "string"
   default = ""
-}
+}*/
 
 variable "root_volume_size" {
   default = 8
