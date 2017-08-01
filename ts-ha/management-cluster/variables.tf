@@ -37,3 +37,7 @@ variable "aws_public_subnet_ids" {}
 variable "aws_key_pair" {}
 
 variable "rancher_com_arn" {}
+
+variable "elb_sgs" {}
+
+variable "compute_sgs" {}

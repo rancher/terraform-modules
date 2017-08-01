@@ -28,11 +28,11 @@ module "management_elb" {
   source = "../../modules/aws/network/components/elb"
 
   name                    = "${var.aws_env_name}-api-mgmt"
-  security_groups         = "sg-b1000dd5"
+  security_groups         = "${var.elb_sgs}"
   public_subnets          = "${var.aws_public_subnet_ids}"
   instance_ssl_port       = "8080"
   proxy_proto_port_string = "80,8080"
-  instance_http_port      = "80"
+  instance_http_port      = "8080"
 
   health_check_target     = "TCP:8080"
 
@@ -54,12 +54,12 @@ module "compute" {
   ami_id          = "${var.aws_ami_id}"
   instance_type   = "${var.aws_instance_type}"
   ssh_key_name    = "${var.aws_key_pair}"
-  security_groups = "sg-d3b3dbab,sg-b2000dd6"
+  security_groups = "${var.compute_sgs}"
   lb_ids          = "${module.management_elb.elb_id}"
   spot_enabled    = "${var.spot_enabled}"
 
   subnet_ids                  = "${var.aws_private_subnet_ids}"
   subnet_cidrs                = "${var.aws_private_subnet_cidrs}"
-  externally_defined_userdata = ""
+  externally_defined_userdata = "${data.template_file.userdata.rendered}"
   health_check_type           = "${var.health_check_type}"
 }
