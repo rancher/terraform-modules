@@ -22,7 +22,7 @@ For the network you will need to define the following variables in the `network.
 aws_env_name = "production"
 aws_vpc_cidr = "10.0.0.0/16"                          # CIDR block for the whole VPC
 aws_private_subnet_cidrs = "10.0.0.0/24,10.0.64.0/24" # Should be one per Availability Zone
-aws_public_subnet_cidrs = "10.0.32.0/24,10.0.96.0/24" # ''                                ''
+aws_public_subnet_cidrs = "10.0.0.0/24,10.0.1.0/24"
 aws_subnet_azs = "us-west-1a,us-west-1b"              # Comma separated list of AZs
 server_cert_path = "certfile"
 server_key_path = "Keyfile"
