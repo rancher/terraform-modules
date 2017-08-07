@@ -6,3 +6,4 @@
 *.key
 *.crt
 .DS_Store
+terraform.tfvars

@@ -26,26 +26,27 @@ resource "google_compute_instance_group_manager" "rancher-servers" {
   }
 }
 
-resource "google_compute_health_check" "rancher-servers" {
-  name = "rancher-servers"
+resource "google_compute_http_health_check" "rancher-servers" {
+  name         = "rancher-server-health-check"
+  description = "Health check for Rancher Server instances"
+  request_path = "/ping"
+  port = "8080"
 
-  timeout_sec        = 1
-  check_interval_sec = 1
-
-  tcp_health_check {
-    port = "8080"
-  }
+  timeout_sec        = 2
+  check_interval_sec = 30
+  unhealthy_threshold = 2
 }
-
 
 resource "google_compute_target_pool" "rancher-servers" {
   name = "rancher-servers-target"
-  depends_on = ["google_compute_health_check.rancher-servers"]
+  description = "Target pool for Rancher Servers"
+  depends_on = ["google_compute_http_health_check.rancher-servers"]
 
-  # Need to revisit why this isn't working, it tries to lookup an HTTP load balancer
-  # health_checks = [
-  #   "${google_compute_health_check.rancher-servers.name}",
-  # ]
+  health_checks = [
+    "${google_compute_http_health_check.rancher-servers.name}",
+  ]
+  // Options are "NONE" (no affinity). "CLIENT_IP" (hash of the source/dest addresses / ports), and "CLIENT_IP_PROTO" also includes the protocol (default "NONE").
+  session_affinity = "NONE"
 }
 
 
