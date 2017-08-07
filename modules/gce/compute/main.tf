@@ -101,8 +101,11 @@ resource "google_compute_instance_template" "rancher-servers" {
 
 resource "google_compute_forwarding_rule" "rancher-servers" {
   name       = "rancher-servers-forwarder"
+  description = "Externally facing forwarder for Rancher servers"
   target     = "${google_compute_target_pool.rancher-servers.self_link}"
-  port_range = "80"
+  ip_protocol = "TCP"
+  port_range = "80-8080"
+  load_balancing_scheme = "EXTERNAL"
 }
 
 resource "google_compute_firewall" "default" {
