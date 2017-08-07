@@ -29,7 +29,7 @@ resource "google_compute_instance_group_manager" "rancher-servers" {
 resource "google_compute_http_health_check" "rancher-servers" {
   name         = "rancher-server-health-check"
   description = "Health check for Rancher Server instances"
-  request_path = "/ping"
+  request_path = "/v1/scripts/api.crt"
   port = "8080"
 
   timeout_sec        = 2
@@ -55,7 +55,6 @@ data "template_file" "userdata" {
 
   vars {
     database_endpoint = "${var.database_endpoint}"
-    database_name     = "${var.database_name}"
     database_user     = "${var.database_user}"
     database_password = "${var.database_password}"
     rancher_version   = "${var.rancher_version}"

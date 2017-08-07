@@ -13,7 +13,6 @@ resource "random_id" "server" {
 variable "database_endpoint" {}
 variable "database_user" {}
 variable "database_password" {}
-variable "database_name" {}
 
 module "gce_compute" {
   source = "../../../modules/gce/compute"
@@ -26,6 +25,5 @@ module "gce_compute" {
   database_endpoint = "${var.database_endpoint}"
   database_user = "${var.database_user}"
   database_password = "${var.database_password}"
-  database_name = "${var.database_name}"
   rancher_version = "stable"
 }

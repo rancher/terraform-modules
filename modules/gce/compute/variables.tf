@@ -21,9 +21,6 @@ variable "instance_tags"  {
 variable "database_endpoint" {
   default = ""
 }
-variable "database_name" {
-  default = ""
-}
 variable "database_user" {
   default = ""
 }
