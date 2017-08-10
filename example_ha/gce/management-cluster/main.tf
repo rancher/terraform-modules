@@ -18,7 +18,7 @@ module "gce_compute" {
   source = "../../../modules/gce/compute"
 
   name = "rancher-server-${random_id.server.hex}"
-  machine_type = "n1-standard-1"
+  machine_type = "n1-standard-2"
   zone = "us-central1-f"
   server_count = "1"
   service_account_scopes = []
