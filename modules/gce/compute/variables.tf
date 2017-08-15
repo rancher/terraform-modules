@@ -36,4 +36,4 @@ variable "rancher_version" {
 }
 variable "gce-cloud-sql-instance-connection-name" {}
 
-variable "ssh_key" {}
+variable "ssh_pub_key" {}

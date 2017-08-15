@@ -1,6 +1,6 @@
 #cloud-config
 ssh_authorized_keys:
-  - ssh-rsa ${ssh_key}
+  - ssh-rsa ${ssh_pub_key}
 write_files:
   - path: /etc/rc.local
     permissions: "0755"

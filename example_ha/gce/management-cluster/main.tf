@@ -4,8 +4,7 @@ variable "gce_region" {}
 variable "database_endpoint" {}
 variable "database_user" {}
 variable "database_password" {}
-variable "gce-cloud-sql-instance-connection-name" {}
-variable "ssh_key" {}
+variable "ssh_pub_key" {}
 
 // Configure the Google Cloud provider
 provider "google" {
@@ -42,5 +41,5 @@ module "gce_compute" {
   database_password = "${var.database_password}"
   gce-cloud-sql-instance-connection-name = "${var.gce_project}:${var.gce_region}:${data.terraform_remote_state.database.name}"
   rancher_version = "stable"
-  ssh_key = "${var.ssh_key}"
+  ssh_pub_key = "${var.ssh_pub_key}"
 }

@@ -60,7 +60,7 @@ data "template_file" "userdata" {
     rancher_version   = "${var.rancher_version}"
     docker_version    = "${var.docker_version}"
     gce-cloud-sql-instance-connection-name = "${var.gce-cloud-sql-instance-connection-name}"
-    ssh_key = "${var.ssh_key}"
+    ssh_pub_key = "${var.ssh_pub_key}"
   }
 }
 
@@ -126,7 +126,7 @@ resource "google_compute_firewall" "default" {
     protocol = "tcp"
     ports    = ["8080"]
   }
-  
+
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["rancher-servers"]
 }
