@@ -1,7 +1,7 @@
 # Rancher Terraform Modules
 ---
 
-These are opinionated modules that provision Rancher HA environments on AWS & GCE. We are working on support for Azure as well. Currently these make use of Rancher OS, though work is being done to include additional OSes.
+These are opinionated [Terraform](https://www.terraform.io/) modules that provision Rancher HA environments on AWS & GCE. We are working on support for Azure as well. Currently these make use of [RancherOS](https://github.com/rancher/os), though work is being done to include additional OSes.
 
 See the `example_ha` folder for a possible layout that breaks up the network, DB and management plane into separate components. You should be able to deploy into existing environments leveraging the components that you need.
 
@@ -16,11 +16,13 @@ The HA example is divided up into two sections, one for AWS and one for GCE that
 * RancherOS Compute Image
 * VM Instance Group - Allows you to dynamically scale by changing the quantity.
 * Forwarding Rule - Balances traffic between members of the instance group.
-* CloudSQL Instance - MySQL compatible persistence service
+* CloudSQL Instance - MySQL compatible persistence service. Connections are proxied over the [GCE Cloud SQL Proxy](https://cloud.google.com/sql/docs/mysql/sql-proxy).
 
+#### Getting Help / Feedback
+We appreciate feedback and of course pull requests to help improve these modules. Filing Github issues is also a good way to share feedback. You can communicate with the Rancher community at:
 
-
-**Note:** The GCE module currently has a highly permissive network access model for the CloudSQL instance that allows traffic from all networks. We recommend using caution while this limitation exists.
+- [Rancher Users Slack](https://slack.rancher.io/)
+- [Rancher Forums](https://forums.rancher.com/)
 
 ## License
 Copyright (c) 2014-2017 [Rancher Labs, Inc.](http://rancher.com)
