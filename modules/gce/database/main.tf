@@ -10,10 +10,7 @@ resource "google_sql_database_instance" "master" {
     disk_type = "${var.disk_type}"
     ip_configuration {
             ipv4_enabled = true
-            authorized_networks {
-                name = "default"
-                value = "0.0.0.0/0"
-              }
+
           }
       }
 }
@@ -31,6 +28,6 @@ resource "google_sql_user" "rancher" {
   password = "${var.db_pass}"
 }
 
-output "endpoint" {
-  value = "${google_sql_database_instance.master.ip_address.0.ip_address}"
+output "name" {
+  value = "${google_sql_database_instance.master.name}"
 }

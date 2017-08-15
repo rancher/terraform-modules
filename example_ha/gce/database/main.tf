@@ -21,6 +21,6 @@ module "gce_database" {
   db_pass = "${var.db_pass}"
 }
 
-output "endpoint" {
-  value = "${module.gce_database.endpoint}"
+output "name" {
+  value = "${module.gce_database.name}"
 }
