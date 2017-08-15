@@ -14,6 +14,15 @@ provider "google" {
   region      = "${var.gce_region}"
 }
 
+// Get local state from our adjacent terraform module
+data "terraform_remote_state" "database" {
+  backend = "local"
+
+  config {
+    path = "${path.module}/../database/terraform.tfstate"
+  }
+}
+
 resource "random_id" "server" {
    byte_length = 4
 }
@@ -31,7 +40,7 @@ module "gce_compute" {
   database_endpoint = "${var.database_endpoint}"
   database_user = "${var.database_user}"
   database_password = "${var.database_password}"
-  gce-cloud-sql-instance-connection-name = "${var.gce-cloud-sql-instance-connection-name}"
+  gce-cloud-sql-instance-connection-name = "${var.gce_project}:${var.gce_region}:${data.terraform_remote_state.database.name}"
   rancher_version = "stable"
   ssh_key = "${var.ssh_key}"
 }
