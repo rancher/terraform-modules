@@ -59,6 +59,8 @@ data "template_file" "userdata" {
     database_password = "${var.database_password}"
     rancher_version   = "${var.rancher_version}"
     docker_version    = "${var.docker_version}"
+    gce-cloud-sql-instance-connection-name = "${var.gce-cloud-sql-instance-connection-name}"
+    ssh_key = "${var.ssh_key}"
   }
 }
 
@@ -66,7 +68,7 @@ resource "google_compute_instance_template" "rancher-servers" {
   name         = "${var.name}-server"
   description = "Template for Rancher Servers"
 
-  tags = ["${var.instance_tags}", "rancher-servers"]
+  tags = ["${var.instance_tags}", "rancher-servers", "created-by-terraform"]
 
   machine_type = "${var.machine_type}"
   instance_description = "Instance running Rancher Server"
@@ -85,18 +87,16 @@ resource "google_compute_instance_template" "rancher-servers" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
+    access_config {}
+  }
+
+  service_account {
+   scopes = [ "compute-ro", "storage-ro", "cloud-platform"]
   }
 
   metadata = "${var.instance_metadata}"
 
   metadata_startup_script = "${data.template_file.userdata.rendered}"
-
-
-  service_account {
-    scopes = ["${var.service_account_scopes}"]
-  }
 }
 
 resource "google_compute_forwarding_rule" "rancher-servers" {

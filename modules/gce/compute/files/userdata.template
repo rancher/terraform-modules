@@ -1,6 +1,6 @@
 #cloud-config
 ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMq435jS2OgpU69PDwxvoLArWNNLiDGJvjXvp0+vxWec8nhndN8w2t2qTFSEYLhMg0UO0lXTStUklwhp+LeTcMH03WuKokyVv3DHBPBL03Kb4IboXBdEt2JfHkZyF4zim6PlobBO19zoqEwpSr6CpDxOY+jCy+hsC1dgFL+gkG4sewHbYYBp38SqiHN2wZFWxlUtAFt3aF4LFYdmHZEBVFy9vmPnQpVj3aBTFTWEnJ000M6LbXFSb4RmrLWR3jaCRrk+73jME4jtK0f5hn0mGx/FGC80iHvl+BHSD7DJHhLTtCFw9cPWZWWbzetbHycfGybSpNC5LyrD8lY/Wf7aCK9Hv3lgioJYhCozv5YCklb/ZEKdDdRy5pqMdu7CgLHgyKjz0yDXO6e9x0kFPKTInADs3tSs9y45QR4VGIgowGMZW8+kkMdSoFmARIQlndKykDS+jlptOaUv+rL/Cd32LNJNPzrAfNjvH+egyNIkpOtj7QOqFkDOPEdixsoDJLorLcmGo55D4qQTaKE3dLjmMrBc3cXJZNxClScz7YsprnaHHF3s7jusIduPyMqgZ7Uobx52vX3BwV1jch1geC1tGl8c5AFEaD9zpSxyLP8krfrRnie1/FVFepkjlUFUUrfMIFM8ITOXXGbDHUyCsppXNQGpoy9YqPNmy332JkMPmlLQ== wjimenez@rancher
+  - ssh-rsa ${ssh_key}
 write_files:
   - path: /etc/rc.local
     permissions: "0755"
@@ -8,7 +8,9 @@ write_files:
     content: |
       #!/bin/bash
       wait-for-docker
-      docker run -d -p 8080:8080 -p 9345:9345 --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e JAVA_OPTS="-Xmx8g" rancher/server:${rancher_version} --advertise-address $(wget -qO - --header="Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/ip) --db-host ${database_endpoint} --db-pass ${database_password} --db-user ${database_user}
+      docker run -d -p 8080:8080 -p 9345:9345 --net=host --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e JAVA_OPTS="-Xmx8g" rancher/server:${rancher_version} --advertise-address $(wget -qO - --header="Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/ip) --db-host 127.0.0.1 --db-pass ${database_password} --db-user ${database_user}
+
+      docker run -d -v /cloudsql:/cloudsql -p 127.0.0.1:3306:3306 --name gce-cloud-sql-proxy --restart=on-failure:10 gcr.io/cloudsql-docker/gce-proxy:1.10 /cloud_sql_proxy -instances=${gce-cloud-sql-instance-connection-name}=tcp:0.0.0.0:3306
 rancher:
   docker:
     engine: ${docker_version}

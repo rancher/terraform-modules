@@ -1,4 +1,5 @@
 variable "name" {}
+variable "gce_project" {}
 variable "machine_type" {}
 variable "zone" {}
 variable "server_count" {
@@ -33,3 +34,6 @@ variable "docker_version" {
 variable "rancher_version" {
   default = "stable"
 }
+variable "gce-cloud-sql-instance-connection-name" {}
+
+variable "ssh_key" {}
