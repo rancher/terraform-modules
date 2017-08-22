@@ -1,3 +1,7 @@
+variable "name" {
+  default = "default"
+}
+
 variable "vpc_id" {}
 
 variable "rds_instance_class" {}
@@ -48,4 +52,16 @@ variable "database_password" {
 
 variable "security_group_name" {
   default = "sg_cattle_db"
+}
+
+variable "skip_final_snapshot" {
+  default = "false"
+}
+
+variable "backup_retention_period" {
+  default = 1
+}
+
+variable "rds_parameter_group_family" {
+  default = "mysql5.6"
 }

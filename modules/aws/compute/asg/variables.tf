@@ -61,3 +61,7 @@ variable "target_group_arn" {
 variable "userdata" {}
 
 variable "health_check_target" {}
+
+variable "iam_instance_profile" {
+  default = ""
+}
