@@ -1,9 +1,11 @@
+variable "name" {}
+
 variable "vpc_id" {}
 
 variable "private_subnet_cidrs" {}
 
 resource "aws_security_group" "management_ui_elb" {
-  name        = "management_ui_elb_sg"
+  name        = "${var.name}-management_ui_elb_sg"
   description = "Allow ports rancher "
   vpc_id      = "${var.vpc_id}"
 
@@ -27,11 +29,11 @@ resource "aws_security_group" "management_ui_elb" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
- 
+
 }
 
 resource "aws_security_group" "management_allow_ui_elb" {
-  name        = "rancher_ha_allow_ui_elb"
+  name        = "${var.name}-rancher_ha_allow_ui_elb"
   description = "Allow Connection from elb"
   vpc_id      = "${var.vpc_id}"
 
@@ -73,7 +75,7 @@ resource "aws_security_group" "management_allow_ui_elb" {
 }
 
 resource "aws_security_group" "management_allow_ui_internal" {
-  name        = "rancher_ha_ui_allow_internal"
+  name        = "${var.name}-rancher_ha_ui_allow_internal"
   description = "Allow Connection from internal"
   vpc_id      = "${var.vpc_id}"
 
