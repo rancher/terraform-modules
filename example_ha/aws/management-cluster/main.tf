@@ -58,6 +58,7 @@ module "management_elb" {
 module "management_sgs" {
   source = "../../modules/aws/network/security_groups/mgmt/ha"
 
+  name                 = "${var.aws_env_name}"
   vpc_id               = "${data.terraform_remote_state.network.vpc_id}"
   private_subnet_cidrs = "${data.terraform_remote_state.network.aws_public_subnet_cidrs}"
 }
