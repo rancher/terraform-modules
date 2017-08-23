@@ -1,0 +1,23 @@
+#cloud-config
+ssh_authorized_keys:
+  - ssh-rsa ${ssh_pub_key}
+write_files:
+  - path: /etc/rc.local
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      wait-for-docker
+      docker run -d -p 8080:8080 -p 9345:9345 --net=host --name rancher-server --restart=always -e CATTLE_USE_LOCAL_ARTIFACTS=false -e JAVA_OPTS="-Xmx8g" rancher/server:${rancher_version} --advertise-address $(wget -qO - --header="Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/ip) --db-host 127.0.0.1 --db-pass ${database_password} --db-user ${database_user}
+
+      docker run -d -v /cloudsql:/cloudsql -p 127.0.0.1:3306:3306 --name gce-cloud-sql-proxy --restart=on-failure:10 gcr.io/cloudsql-docker/gce-proxy:1.10 /cloud_sql_proxy -instances=${gce-cloud-sql-instance-connection-name}=tcp:0.0.0.0:3306
+rancher:
+  docker:
+    engine: ${docker_version}
+    log_driver: "json-file"
+    log_opts:
+      max-file: "3"
+      max-size: "100m"
+      labels: "production"
+  services_include:
+    kernel-headers: true
