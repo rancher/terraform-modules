@@ -41,7 +41,7 @@ data "template_file" "userdata" {
 }
 
 module "management_elb" {
-  source = "../../modules/aws/network/components/elb"
+  source = "../../../modules/aws/network/components/elb"
 
   name                    = "${var.aws_env_name}-api-mgmt"
   security_groups         = "${module.management_sgs.elb_sg_id}"
@@ -56,7 +56,7 @@ module "management_elb" {
 }
 
 module "management_sgs" {
-  source = "../../modules/aws/network/security_groups/mgmt/ha"
+  source = "../../../modules/aws/network/security_groups/mgmt/ha"
 
   name                 = "${var.aws_env_name}"
   vpc_id               = "${data.terraform_remote_state.network.vpc_id}"
@@ -64,13 +64,13 @@ module "management_sgs" {
 }
 
 module "compute" {
-  source = "../../modules/aws/compute/ha-mgmt"
+  source = "../../../modules/aws/compute/ha-mgmt"
 
   vpc_id          = "${data.terraform_remote_state.network.vpc_id}"
   name            = "${var.aws_env_name}-management"
   ami_id          = "${var.aws_ami_id}"
   instance_type   = "${var.aws_instance_type}"
-  ssh_key_name    = "${aws_key_pair.management.key_name}"
+  ssh_key_name    = "${var.aws_key_pair}"
   security_groups = "${join(",", list(module.management_sgs.management_node_sgs))}"
   lb_ids          = "${join(",", list(module.management_elb.elb_id))}"
   spot_enabled    = "${var.spot_enabled}"

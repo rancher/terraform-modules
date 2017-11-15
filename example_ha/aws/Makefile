@@ -7,7 +7,7 @@ state-pull:
 	@terraform remote pull
 
 get:
-	@terraform get
+	@terraform init
 
 plan: get
 	@terraform plan -var-file ../main-vars.tfvars -var-file ./$(MODULE).tfvars
