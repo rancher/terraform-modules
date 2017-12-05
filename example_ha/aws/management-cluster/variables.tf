@@ -23,3 +23,20 @@ variable "spot_enabled" {}
 variable "health_check_type" {
   default = "EC2"
 }
+
+variable "sysdig_key" {
+
+}
+
+variable "cloudflare_token" {
+  default = ""
+}
+
+variable "cloudflare_email" {
+  default = ""
+}
+
+variable "aws_key_pair" {
+  type    = "string"
+  default = "value"
+}
