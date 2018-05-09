@@ -6,6 +6,7 @@ provider "digitalocean" {
 data "template_file" "user_data" {
     template = "${file("${path.module}/user-data-ubuntu.tpl")}"
     vars {
+        docker_pkg_name = "${var.docker_pkg_name}"
         hostname-prefix = "${var.instance_type}"
         docker_cmd = "${var.docker_cmd}"
     }
@@ -26,5 +27,5 @@ resource "digitalocean_droplet" "rancher_instance" {
 
 
 output "server-ip" {
-  value = "${digitalocean_droplet.rancher_instance.ipv4_address}"
+  value = "${digitalocean_droplet.rancher_instance.*.ipv4_address[0]}"
 }
