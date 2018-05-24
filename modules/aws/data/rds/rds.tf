@@ -53,6 +53,10 @@ output "endpoint" {
   value = "${module.aws_database.endpoint}"
 }
 
+output "address" {
+  value = "${module.aws_database.address}"
+}
+
 output "username" {
   value = "${var.database_user}"
 }

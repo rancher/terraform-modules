@@ -23,19 +23,11 @@ variable "rds_allocated_storage" {
 }
 
 variable "rds_engine_type" {
-  // Valid types are
-  // - mysql
-  // - postgres
-  // - oracle-*
-  // - sqlserver-*
-  // See http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html
-  // --engine
+  // Valid types are  // - mysql  // - postgres  // - oracle-*  // - sqlserver-*  // See http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html  // --engine
 }
 
 variable "rds_engine_version" {
-  // For valid engine versions, see:
-  // See http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html
-  // --engine-version
+  // For valid engine versions, see:  // See http://docs.aws.amazon.com/cli/latest/reference/rds/create-db-instance.html  // --engine-version
 }
 
 variable "rds_instance_class" {}

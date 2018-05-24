@@ -9,9 +9,14 @@ output "rds_instance_id" {
   value = "${aws_db_instance.main_rds_instance.id}"
 }
 
-// Output the Address of the RDS instance
+// Output the Endpoint(w/ port) of the RDS instance
 output "endpoint" {
   value = "${aws_db_instance.main_rds_instance.endpoint}"
+}
+
+// Output only Address of RDS instance
+output "address" {
+  value = "${aws_db_instance.main_rds_instance.address}"
 }
 
 // Output the ID of the Subnet Group

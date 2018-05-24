@@ -36,3 +36,4 @@ The following will be outputs that can be imported by other components via remot
   * password - The password that should be used to connect to the database. Keep in mind this should be guarded closely.
   * username - The username for connecting to the database.
   * endpoint - The RDS endpoint to connect to.
+  * address  - RDS internal DNS/host name without port

@@ -24,9 +24,7 @@ variable "health_check_type" {
   default = "EC2"
 }
 
-variable "sysdig_key" {
-
-}
+variable "sysdig_key" {}
 
 variable "cloudflare_token" {
   default = ""

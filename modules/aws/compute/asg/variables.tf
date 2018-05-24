@@ -12,7 +12,7 @@ variable "lb_ids" {}
 
 variable "use_elb" {
   description = "To use ELB pass 1, to use ALB pass 0"
-  default = 1
+  default     = 1
 }
 
 variable "health_check_type" {
