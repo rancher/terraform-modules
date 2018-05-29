@@ -32,8 +32,6 @@ variable "scale_desired_size" {
   default = "3"
 }
 
-variable "subnet_cidrs" {}
-
 variable "subnet_ids" {
   default = ""
 }
