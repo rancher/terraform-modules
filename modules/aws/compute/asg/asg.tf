@@ -97,5 +97,5 @@ output "name" {
 }
 
 output "id" {
-  value = "${element(concat(aws_autoscaling_group.alb.*.id, aws_autoscaling_group.elb.*. id), var.use_elb)}"
+  value = "${element(concat(aws_autoscaling_group.alb.*.id, aws_autoscaling_group.elb.*.id), var.use_elb)}"
 }
