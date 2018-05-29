@@ -2,8 +2,6 @@ variable "name" {}
 
 variable "vpc_id" {}
 
-variable "subnet_cidrs" {}
-
 variable "subnet_ids" {}
 
 variable "ssh_key_name" {}
