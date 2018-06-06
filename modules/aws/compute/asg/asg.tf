@@ -37,17 +37,19 @@ resource "aws_autoscaling_group" "elb" {
   force_delete              = false
   load_balancers            = ["${split(",", var.lb_ids)}"]
 
-  tag {
-    key                 = "Name"
-    value               = "${var.name}"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "spot-enabled"
-    value               = "${var.spot_enabled}"
-    propagate_at_launch = true
-  }
+  tags = [
+    {
+      key                 = "Name"
+      value               = "${var.name}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "spot-enabled"
+      value               = "${var.spot_enabled}"
+      propagate_at_launch = true
+    },
+    "${var.tags}",
+  ]
 
   lifecycle {
     create_before_destroy = true
@@ -70,23 +72,26 @@ resource "aws_autoscaling_group" "alb" {
   vpc_zone_identifier  = ["${split(",", var.subnet_ids)}"]
   launch_configuration = "${aws_launch_configuration.config.name}"
 
-  tag {
-    key                 = "Name"
-    value               = "${var.name}"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "spot-enabled"
-    value               = "${var.spot_enabled}"
-    propagate_at_launch = true
-  }
+  tags = [
+    {
+      key                 = "Name"
+      value               = "${var.name}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "spot-enabled"
+      value               = "${var.spot_enabled}"
+      propagate_at_launch = true
+    },
+    "${var.tags}",
+  ]
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
+// Changes from PR: https://github.com/rancher/terraform-modules/pull/20 
 output "name" {
   value = "${element(concat(aws_autoscaling_group.alb.*.name, aws_autoscaling_group.elb.*.name), var.use_elb)}"
 }

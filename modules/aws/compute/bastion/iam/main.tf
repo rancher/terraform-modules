@@ -1,8 +1,8 @@
 variable "name" {}
 
 resource "aws_iam_instance_profile" "eip_assignment" {
-  name  = "${var.name}-eip-assignment-profile"
-  role  = "${aws_iam_role.eip_assignment.name}"
+  name = "${var.name}-eip-assignment-profile"
+  role = "${aws_iam_role.eip_assignment.name}"
 }
 
 resource "aws_iam_role" "eip_assignment" {

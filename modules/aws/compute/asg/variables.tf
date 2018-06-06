@@ -2,8 +2,6 @@ variable "name" {}
 
 variable "vpc_id" {}
 
-variable "subnet_cidrs" {}
-
 variable "subnet_ids" {}
 
 variable "ssh_key_name" {}
@@ -12,7 +10,7 @@ variable "lb_ids" {}
 
 variable "use_elb" {
   description = "To use ELB pass 1, to use ALB pass 0"
-  default = 1
+  default     = 1
 }
 
 variable "health_check_type" {
@@ -64,4 +62,11 @@ variable "health_check_target" {}
 
 variable "iam_instance_profile" {
   default = ""
+}
+
+// Ref: https://github.com/hashicorp/terraform-aws-consul/blob/master/modules/consul-cluster/variables.tf
+variable "tags" {
+  description = "List fo extra tag blocks added to the autoscaling group configuration. Each element in the list is a map containing keys 'key', 'value', and 'propagate_at_launch' mapped to the respective values."
+  type        = "list"
+  default     = []
 }

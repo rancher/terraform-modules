@@ -29,7 +29,6 @@ resource "aws_security_group" "management_ui_elb" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
 }
 
 resource "aws_security_group" "management_allow_ui_elb" {
@@ -71,7 +70,6 @@ resource "aws_security_group" "management_allow_ui_elb" {
     protocol        = "tcp"
     security_groups = ["${aws_security_group.management_ui_elb.id}"]
   }
-
 }
 
 resource "aws_security_group" "management_allow_ui_internal" {

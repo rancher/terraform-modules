@@ -1,5 +1,6 @@
 // Expected to be set at runtime by user
 variable "gce_project" {}
+
 variable "gce_region" {}
 variable "database_endpoint" {}
 variable "database_user" {}
@@ -23,23 +24,22 @@ data "terraform_remote_state" "database" {
 }
 
 resource "random_id" "server" {
-   byte_length = 4
+  byte_length = 4
 }
-
 
 module "gce_compute" {
   source = "../../../modules/gce/compute"
 
-  name = "rancher-server-${random_id.server.hex}"
-  gce_project = "${var.gce_project}"
-  machine_type = "n1-standard-2"
-  zone = "us-central1-f"
-  server_count = "1"
-  service_account_scopes = []
-  database_endpoint = "${var.database_endpoint}"
-  database_user = "${var.database_user}"
-  database_password = "${var.database_password}"
+  name                                   = "rancher-server-${random_id.server.hex}"
+  gce_project                            = "${var.gce_project}"
+  machine_type                           = "n1-standard-2"
+  zone                                   = "us-central1-f"
+  server_count                           = "1"
+  service_account_scopes                 = []
+  database_endpoint                      = "${var.database_endpoint}"
+  database_user                          = "${var.database_user}"
+  database_password                      = "${var.database_password}"
   gce-cloud-sql-instance-connection-name = "${var.gce_project}:${var.gce_region}:${data.terraform_remote_state.database.name}"
-  rancher_version = "stable"
-  ssh_pub_key = "${var.ssh_pub_key}"
+  rancher_version                        = "stable"
+  ssh_pub_key                            = "${var.ssh_pub_key}"
 }

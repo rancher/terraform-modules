@@ -50,9 +50,9 @@ module "management_elb" {
   proxy_proto_port_string = "80,8080"
   instance_http_port      = "80"
 
-  health_check_target     = "HTTP:8080/v1/scripts/api.crt"
+  health_check_target = "HTTP:8080/v1/scripts/api.crt"
 
-  ssl_certificate_arn     = "${data.terraform_remote_state.network.rancher_com_arn}"
+  ssl_certificate_arn = "${data.terraform_remote_state.network.rancher_com_arn}"
 }
 
 module "management_sgs" {

@@ -11,35 +11,35 @@ provider "aws" {
 }
 
 resource "rancher_environment" "ha_k8s" {
-   name                = "${var.name}"
-   project_template_id = "${var.project_template_id}"
+  name                = "${var.name}"
+  project_template_id = "${var.project_template_id}"
 }
 
 resource "rancher_registration_token" "etcd_nodes" {
-   name           = "etcd_nodes"
-   environment_id = "${rancher_environment.ha_k8s.id}"
+  name           = "etcd_nodes"
+  environment_id = "${rancher_environment.ha_k8s.id}"
 
-   host_labels {
-     etcd = "true"
-   }
+  host_labels {
+    etcd = "true"
+  }
 }
 
 resource "rancher_registration_token" "orchestration_nodes" {
-   name  = "etcd_nodes"
-   environment_id = "${rancher_environment.ha_k8s.id}"
+  name           = "etcd_nodes"
+  environment_id = "${rancher_environment.ha_k8s.id}"
 
-   host_labels {
-     orchestration = "true"
-   }
+  host_labels {
+    orchestration = "true"
+  }
 }
 
 resource "rancher_registration_token" "compute_nodes" {
-   name  = "etcd_nodes"
-   environment_id = "${rancher_environment.ha_k8s.id}"
+  name           = "etcd_nodes"
+  environment_id = "${rancher_environment.ha_k8s.id}"
 
-   host_labels {
-     compute = "true"
-   }
+  host_labels {
+    compute = "true"
+  }
 }
 
 data "template_file" "etcd_userdata" {
@@ -127,4 +127,3 @@ module "compute_asg" {
   vpc_id              = "${var.vpc_id}"
   instance_type       = "${var.aws_instance_type}"
 }
-

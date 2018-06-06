@@ -32,8 +32,6 @@ variable "scale_desired_size" {
   default = "3"
 }
 
-variable "subnet_cidrs" {}
-
 variable "subnet_ids" {
   default = ""
 }
@@ -57,4 +55,11 @@ variable "userdata" {
 
 variable "root_volume_size" {
   default = 8
+}
+
+// Ref: https://github.com/hashicorp/terraform-aws-consul/blob/master/modules/consul-cluster/variables.tf
+variable "tags" {
+  description = "List fo extra tag blocks added to the autoscaling group configuration. Each element in the list is a map containing keys 'key', 'value', and 'propagate_at_launch' mapped to the respective values."
+  type        = "list"
+  default     = []
 }
