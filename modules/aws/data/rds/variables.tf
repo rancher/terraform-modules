@@ -65,3 +65,7 @@ variable "backup_retention_period" {
 variable "rds_parameter_group_family" {
   default = "mysql5.6"
 }
+
+variable "tags" {
+  type = "map"
+}

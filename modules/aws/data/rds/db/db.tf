@@ -38,6 +38,9 @@ resource "aws_db_instance" "main_rds_instance" {
   // We want the multi-az setting to be toggleable, but off by default
   multi_az     = "${var.rds_is_multi_az}"
   storage_type = "${var.rds_storage_type}"
+
+  // Tags
+  tags = "${var.tags}"
 }
 
 resource "aws_db_subnet_group" "main_db_subnet_group" {
