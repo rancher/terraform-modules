@@ -58,3 +58,7 @@ variable "skip_final_snapshot" {
 variable "backup_retention_period" {
   default = 1
 }
+
+variable "tags" {
+  type = "map"
+}

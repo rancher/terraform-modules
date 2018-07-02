@@ -26,6 +26,9 @@ module "aws_database" {
   // dynamic
   rds_security_group_id = "${module.aws_sg_db.security_group_id_database}"
   db_parameter_group    = "${aws_db_parameter_group.default.name}"
+
+  // Tags
+  tags = "${var.tags}"
 }
 
 resource "aws_db_parameter_group" "default" {
